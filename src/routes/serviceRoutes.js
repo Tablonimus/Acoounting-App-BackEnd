@@ -2,11 +2,11 @@ const { Router } = require("express");
 const sequelize = require("sequelize");
 const axios = require("axios");
 const router = Router();
-const { getAllCriminals, postCriminal } = require("../controllers/criminalControllers");
+// const { getAllCriminals, postCriminal } = require("../controllers/criminalControllers");
 
 router.get("/", async (req, res) => {
   try {
-    const criminals = await getAllCriminals();
+    const criminals = await getAllbills();
     res.status(201).json(criminals);
   } catch (error) {
     res.status(400).json(error.message);

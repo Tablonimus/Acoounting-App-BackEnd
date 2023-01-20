@@ -2,34 +2,34 @@ const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Luz",
+    "Invoice",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
         primaryKey: true,
       },
+      numero_comprobante: {
+        type: DataTypes.STRING, //Lote y Manzana
+
+        unique: true,
+      },
 
       consumo: {
         type: DataTypes.STRING, //Lote y Manzana
-        unique: true,
       },
 
       pxKw: {
         type: DataTypes.STRING,
       },
-      segundoNombre: {
-        type: DataTypes.STRING,
-      },
-      apellido: {
-        type: DataTypes.STRING,
-      },
 
-      mail: {type: DataTypes.STRING},
-      telefono: { type: DataTypes.INTEGER },
-      
-      password: {type: DataTypes.STRING},
-    },
-    { timestamps: false }
+      dirección: {
+        type: DataTypes.STRING, //Lote y Manzana
+      },
+      fecha: {
+        type: DataTypes.STRING,
+      },
+    }
+    // { timestamps: false }
   );
 };

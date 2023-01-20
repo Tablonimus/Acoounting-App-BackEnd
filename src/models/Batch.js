@@ -2,11 +2,16 @@ const { DataTypes, UUIDV4 } = require("sequelize");
 
 module.exports = (sequelize) => {
   sequelize.define(
-    "Lote",
+    "Batch",
     {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
+      },
+
+      numero: {
+        type: DataTypes.STRING, //Lote y Manzana
+        unique: true,
         primaryKey: true,
       },
 
@@ -15,16 +20,16 @@ module.exports = (sequelize) => {
         unique: true,
       },
 
+      m2: { type: DataTypes.INTEGER },
+
       titular: {
         type: DataTypes.STRING,
       },
 
-      m2: { type: DataTypes.INTEGER },
-
       mail: { type: DataTypes.STRING },
-      telefono: { type: DataTypes.INTEGER },
 
-      password: { type: DataTypes.STRING },
+      telefono: { type: DataTypes.INTEGER },
+      telefono2: { type: DataTypes.INTEGER },
     },
     { timestamps: false }
   );
