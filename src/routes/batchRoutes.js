@@ -2,27 +2,34 @@ const { Router } = require("express");
 const sequelize = require("sequelize");
 const axios = require("axios");
 const router = Router();
-// const { getAllCriminals, postCriminal } = require("../controllers/criminalControllers");
+const { getAllBatches, postBatch } = require("../controllers/batchControllers");
 
 router.get("/", async (req, res) => {
   try {
-    const criminals = await getAllbills();
-    res.status(201).json(criminals);
+    const batches = await getAllBatches();
+    res.status(201).json(batches);
   } catch (error) {
     res.status(400).json(error.message);
   }
 });
 
-router.post("/",async(req,res)=>{
-  const {title, classification,gender,image,subjects,reward_text}= req.body;
+router.post("/", async (req, res) => {
+  const { numero, ubicacion, m2, titular, mail, telefono, telefono2 } =
+    req.body;
   try {
-    const criminal = await postCriminal(
-      title, classification,gender,image,subjects,reward_text
-    )
-    res.status(201).json("Criminal created");
+    const newBatch = await postBatch(
+      numero,
+      ubicacion,
+      m2,
+      titular,
+      mail,
+      telefono,
+      telefono2
+    );
+    res.status(201).json(newBatch);
   } catch (error) {
     res.status(400).json(error.message);
   }
-})
+});
 
 module.exports = router;

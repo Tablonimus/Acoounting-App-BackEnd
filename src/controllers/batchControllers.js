@@ -1,41 +1,43 @@
 const axios = require("axios");
 require("dotenv").config();
 
-// const { Criminal } = require("../db");
+const { Batch } = require("../db");
 
-// async function getAllCriminals() {
-//   try {
-//     const dbCriminals = await Criminal.findAll();
-//     const jsonCriminalsData = await Promise.all(
-//       dbCriminals.map(async (criminal) => criminal.toJSON())
-//     );
+async function getAllBatches() {
+  try {
+    const dbBatches = await Batch.findAll();
+    const jsonBatches = await Promise.all(
+      dbBatches.map(async (batch) => batch.toJSON())
+    );
 
-//     return jsonCriminalsData;
-//   } catch (error) {
-//     throw new Error("getAllCriminals controller error");
-//   }
-// }
+    return jsonBatches;
+  } catch (error) {
+    throw new Error("getAllBatches controller error");
+  }
+}
 
-// const postCriminal = async (
-//   title,
-//   classification,
-//   gender,
-//   image,
-//   subjects,
-//   reward_text
-// ) => {
-//   try {
-//     const newCriminal = await Criminal.create({
-//       title,
-//       classification,
-//       gender,
-//       image,
-//       subjects,
-//       reward_text
-//     });
-//   } catch (error) {
-//     console.error(err);
-//   }
-// };
+const postBatch = async (
+  numero,
+  ubicacion,
+  m2,
+  titular,
+  mail,
+  telefono,
+  telefono2
+) => {
+  try {
+    const newBatch = await Batch.create({
+      numero,
+      ubicacion,
+      m2,
+      titular,
+      mail,
+      telefono,
+      telefono2,
+    });
+  } catch (error) {
+    console.error(err);
+  }
+};
 
-module.exports = {   };
+module.exports = { getAllBatches, postBatch };

@@ -15,7 +15,7 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
 
-      ubicación: {
+      ubicacion: {
         type: DataTypes.STRING, //Lote y Manzana
         unique: true,
       },
