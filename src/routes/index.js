@@ -1,6 +1,8 @@
 const { Router } = require("express");
 
 const billing = require("./billingRoutes");
+const batch = require("./batchRoutes");
+const service = require("./serviceRoutes");
 const router = Router();
 
 // Configurar los routers
@@ -10,5 +12,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/billing", billing);
+router.use("/batch", batch);
+router.use("/service", service);
 
 module.exports = router;

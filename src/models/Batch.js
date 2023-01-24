@@ -20,7 +20,7 @@ module.exports = (sequelize) => {
         unique: true,
       },
 
-      m2: { type: DataTypes.INTEGER },
+      m2: { type: DataTypes.STRING },
 
       titular: {
         type: DataTypes.STRING,
@@ -28,8 +28,8 @@ module.exports = (sequelize) => {
 
       mail: { type: DataTypes.STRING },
 
-      telefono: { type: DataTypes.INTEGER },
-      telefono2: { type: DataTypes.INTEGER },
+      telefono: { type: DataTypes.STRING },
+      telefono2: { type: DataTypes.STRING },
     },
     { timestamps: false }
   );

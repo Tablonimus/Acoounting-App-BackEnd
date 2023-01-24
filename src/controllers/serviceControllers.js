@@ -1,41 +1,47 @@
 const axios = require("axios");
 require("dotenv").config();
 
-// const { Criminal } = require("../db");
+const { Service } = require("../db");
 
-// async function getAllCriminals() {
-//   try {
-//     const dbCriminals = await Criminal.findAll();
-//     const jsonCriminalsData = await Promise.all(
-//       dbCriminals.map(async (criminal) => criminal.toJSON())
-//     );
+async function getAllServices() {
+  try {
+    const dbServices = await Service.findAll();
+    const jsonServices = await Promise.all(
+      dbServices.map(async (serv) => serv.toJSON())
+    );
 
-//     return jsonCriminalsData;
-//   } catch (error) {
-//     throw new Error("getAllCriminals controller error");
-//   }
-// }
+    return jsonServices;
+  } catch (error) {
+    throw new Error("getAllBatches controller error");
+  }
+}
 
-// const postCriminal = async (
-//   title,
-//   classification,
-//   gender,
-//   image,
-//   subjects,
-//   reward_text
-// ) => {
-//   try {
-//     const newCriminal = await Criminal.create({
-//       title,
-//       classification,
-//       gender,
-//       image,
-//       subjects,
-//       reward_text
-//     });
-//   } catch (error) {
-//     console.error(err);
-//   }
-// };
+const postService = async (name, price, vendor) => {
+  try {
+    const newService = await Service.create({
+      name,
+      price,
+      vendor,
+    });
+    return newService;
+  } catch (error) {
+    console.error(error);
+  }
+};
+const updateService = async (name, price, vendor) => {
+  try {
+    const updatedService = await Service.update(
+      {
+        name,
+        price,
+        vendor,
+      },
+      { where: { name: name } }
+    );
+    return updatedService;
+  } catch (error) {
+    console.error(err);
+  }
+};
 
-module.exports = {   };
+module.exports = { getAllServices, postService, updateService };
