@@ -7,25 +7,44 @@ module.exports = (sequelize) => {
       id: {
         type: DataTypes.UUID,
         defaultValue: DataTypes.UUIDV4,
-        primaryKey: true,
+      
       },
-      numero_comprobante: {
-        type: DataTypes.STRING, //Lote y Manzana
 
+      numero_comprobante: {
+        type: DataTypes.STRING,
+        primaryKey: true,
         unique: true,
       },
 
-      consumo: {
-        type: DataTypes.STRING, //Lote y Manzana
-      },
-
-      pxKw: {
+      remitente: {
         type: DataTypes.STRING,
       },
 
-      dirección: {
-        type: DataTypes.STRING, //Lote y Manzana
+      numero_lote: {
+        type: DataTypes.STRING,
       },
+
+      direccion: {
+        type: DataTypes.STRING,
+      },
+
+      detalle: {
+        type: DataTypes.STRING,
+      },
+
+      consumo: {
+        type: DataTypes.STRING,
+      },
+
+      pagado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false
+      },
+
+      total: {
+        type: DataTypes.STRING,
+      },
+
       fecha: {
         type: DataTypes.STRING,
       },

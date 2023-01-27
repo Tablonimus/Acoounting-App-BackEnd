@@ -1,41 +1,61 @@
 const axios = require("axios");
 require("dotenv").config();
 
-// const { Criminal } = require("../db");
+const { Invoice, Batch, Service } = require("../db");
 
-// async function getAllCriminals() {
-//   try {
-//     const dbCriminals = await Criminal.findAll();
-//     const jsonCriminalsData = await Promise.all(
-//       dbCriminals.map(async (criminal) => criminal.toJSON())
-//     );
+async function getAllInvoices() {
+  try {
+    const dbInvoices = await Invoice.findAll();
+    const jsonData = await Promise.all(
+      dbInvoices.map(async (inv) => inv.toJSON())
+    );
 
-//     return jsonCriminalsData;
-//   } catch (error) {
-//     throw new Error("getAllCriminals controller error");
-//   }
-// }
+    return jsonData;
+  } catch (error) {
+    throw new Error("getAllInvoices controller error");
+  }
+}
 
-// const postCriminal = async (
-//   title,
-//   classification,
-//   gender,
-//   image,
-//   subjects,
-//   reward_text
-// ) => {
-//   try {
-//     const newCriminal = await Criminal.create({
-//       title,
-//       classification,
-//       gender,
-//       image,
-//       subjects,
-//       reward_text
-//     });
-//   } catch (error) {
-//     console.error(err);
-//   }
-// };
+const newInvoice = async (factura, servicio) => {
+  try {
+    const {
+      numero_comprobante,
+      remitente,
+      numero_lote,
+      direccion,
+      detalle,
+      consumo,
 
-module.exports = {   };
+      total,
+      fecha,
+    } = factura;
+
+    const servicioAFacturar = Service.findOne({ where: { nombre: servicio } });
+
+    const totalAFacturar = consumo * servicioAFacturar.costo_fraccion;
+
+    const invoice = await Invoice.create({
+      numero_comprobante,
+      remitente,
+      numero_lote,
+      direccion,
+      detalle,
+      consumo,
+
+      total,
+      fecha,
+    });
+
+    if (servicio !== undefined) {
+      const dbBatch = await Batch.findAll({
+        where: { numero_lote: numero_lote },
+      });
+      newInvoice.addBatch(dbBatch);
+    }
+    return `Factura Creada Correctamente 👏👏👏`;
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { getAllInvoices, newInvoice };

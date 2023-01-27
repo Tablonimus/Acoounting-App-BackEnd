@@ -18,9 +18,14 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { name, price, vendor } = req.body;
+  const { nombre, precio_fraccion, precio_fijo, proveedor } = req.body;
   try {
-    const newService = await postService(name, price, vendor);
+    const newService = await postService(
+      nombre,
+      precio_fraccion,
+      precio_fijo,
+      proveedor
+    );
     res.status(201).json(newService);
   } catch (error) {
     res.status(400).json(error.message);
@@ -28,9 +33,14 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  const { name, price, vendor } = req.body;
+  const { nombre, precio_fraccion, precio_fijo, proveedor } = req.body;
   try {
-    const updatedService = await updateService(name, price, vendor);
+    const updatedService = await updateService(
+      nombre,
+      precio_fraccion,
+      precio_fijo,
+      proveedor
+    );
     res.status(201).json("Servicio actualizado correctamente");
   } catch (error) {
     res.status(400).json(error.message);

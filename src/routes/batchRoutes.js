@@ -18,11 +18,11 @@ router.get("/", async (req, res) => {
 });
 
 router.post("/", async (req, res) => {
-  const { numero, ubicacion, m2, titular, mail, telefono, telefono2 } =
+  const { numero_lote, ubicacion, m2, titular, mail, telefono, telefono2 } =
     req.body;
   try {
     const newBatch = await postBatch(
-      numero,
+      numero_lote,
       ubicacion,
       m2,
       titular,
@@ -37,7 +37,7 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  const { numero, ubicacion, m2, titular, mail, telefono, telefono2 } =
+  const { numero_lote, ubicacion, m2, titular, mail, telefono, telefono2 } =
     req.body;
   try {
     const updatedBatch = await updateBatch(
@@ -49,7 +49,7 @@ router.patch("/", async (req, res) => {
       telefono,
       telefono2
     );
-    res.status(201).json(updatedBatch);
+    res.status(201).json("Información de lote actualizada correctamente");
   } catch (error) {
     res.status(400).json(error.message);
   }

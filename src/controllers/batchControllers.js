@@ -17,7 +17,7 @@ async function getAllBatches() {
 }
 
 const postBatch = async (
-  numero,
+  numero_lote,
   ubicacion,
   m2,
   titular,
@@ -27,7 +27,7 @@ const postBatch = async (
 ) => {
   try {
     const newBatch = await Batch.create({
-      numero,
+      numero_lote,
       ubicacion,
       m2,
       titular,
@@ -41,7 +41,7 @@ const postBatch = async (
   }
 };
 const updateBatch = async (
-  numero,
+  numero_lote,
   ubicacion,
   m2,
   titular,
@@ -59,12 +59,12 @@ const updateBatch = async (
         telefono,
         telefono2,
       },
-      { where: { numero: numero } }
+      { where: { numero_lote: numero_lote } }
     );
 
     return updatedBatch
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 };
 

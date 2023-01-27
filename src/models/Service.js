@@ -10,14 +10,16 @@ module.exports = (sequelize) => {
         primaryKey: true,
       },
 
-      name: {
+      nombre: {
         type: DataTypes.STRING, //Lote y Manzana
       },
 
-      price: {
+      precio_fraccion: { type: DataTypes.STRING },
+
+      precio_fijo: {
         type: DataTypes.STRING,
       },
-      vendor: {
+      proveedor: {
         type: DataTypes.STRING,
       },
     }

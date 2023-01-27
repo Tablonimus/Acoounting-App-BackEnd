@@ -16,31 +16,38 @@ async function getAllServices() {
   }
 }
 
-const postService = async (name, price, vendor) => {
+const postService = async (nombre, precio_fraccion, precio_fijo, proveedor) => {
   try {
     const newService = await Service.create({
-      name,
-      price,
-      vendor,
+      nombre,
+      precio_fraccion,
+      precio_fijo,
+      proveedor,
     });
     return newService;
   } catch (error) {
     console.error(error);
   }
 };
-const updateService = async (name, price, vendor) => {
+const updateService = async (
+  nombre,
+  precio_fraccion,
+  precio_fijo,
+  proveedor
+) => {
   try {
     const updatedService = await Service.update(
       {
-        name,
-        price,
-        vendor,
+        nombre,
+        precio_fraccion,
+        precio_fijo,
+        proveedor,
       },
-      { where: { name: name } }
+      { where: { nombre: nombre } }
     );
     return updatedService;
   } catch (error) {
-    console.error(err);
+    console.error(error);
   }
 };
 

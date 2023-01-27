@@ -9,7 +9,7 @@ module.exports = (sequelize) => {
         defaultValue: DataTypes.UUIDV4,
       },
 
-      numero: {
+      numero_lote: {
         type: DataTypes.STRING, //Lote y Manzana
         unique: true,
         primaryKey: true,
@@ -30,6 +30,8 @@ module.exports = (sequelize) => {
 
       telefono: { type: DataTypes.STRING },
       telefono2: { type: DataTypes.STRING },
+
+      
     },
     { timestamps: false }
   );
