@@ -1,7 +1,31 @@
 const axios = require("axios");
 require("dotenv").config();
-
+const jwt = require("jsonwebtoken");
 const { Batch } = require("../db");
+const TOKEN_KEY = "BVj543kpJ2POLN3PJPOl9nNNL84NL122A54";
+
+////LOGIN JWT-------------------------//
+async function login(mail, password) {
+  console.log(mail, password);
+  const user = await Batch.findOne({ where: { mail: mail } });
+  if (!user) throw new Error("Usuario no encontrado");
+  if (user.deleted === true) throw new Error("Usuario baneado");
+  const pass = await Batch.findOne({ where: { password: password } });
+  if (!pass) throw new Error("Contraseña incorrecta");
+  if (user.deleted === true) throw new Error("Usuario baneado");
+  const token = jwt.sign({ id: user.id }, TOKEN_KEY);
+  return token;
+}
+
+const userId = async (id) => {
+  try {
+    const user = await Batch.findOne({ where: { id: id, deleted: false } });
+
+    return user;
+  } catch (error) {
+    console.error(error);
+  }
+};
 
 async function getAllBatches() {
   try {
@@ -17,23 +41,38 @@ async function getAllBatches() {
 }
 
 const postBatch = async (
-  numero_lote,
-  ubicacion,
+  dni_titular,
+  domicilio_real,
+  gastos_comunes,
+  internet,
+  luz,
   m2,
-  titular,
   mail,
+  medidor_luz,
+  nacionalidad,
+  numero_lote,
   telefono,
-  telefono2
+  telefono2,
+  titular,
+  ubicacion
 ) => {
   try {
     const newBatch = await Batch.create({
-      numero_lote,
-      ubicacion,
+      dni_titular,
+      domicilio_real,
+      gastos_comunes,
+      internet,
+      luz,
       m2,
-      titular,
       mail,
+      medidor_luz: [medidor_luz],
+      nacionalidad,
+      numero_lote,
       telefono,
       telefono2,
+      titular,
+      ubicacion,
+      password: dni_titular
     });
     return newBatch;
   } catch (error) {
@@ -41,31 +80,46 @@ const postBatch = async (
   }
 };
 const updateBatch = async (
-  numero_lote,
-  ubicacion,
+  dni_titular,
+  domicilio_real,
+  gastos_comunes,
+  internet,
+  luz,
   m2,
-  titular,
   mail,
+  medidor_luz,
+  nacionalidad,
+  numero_lote,
   telefono,
-  telefono2
+  telefono2,
+  titular,
+  ubicacion
 ) => {
   try {
     const updatedBatch = await Batch.update(
       {
-        ubicacion,
+        dni_titular,
+        domicilio_real,
+        gastos_comunes,
+        internet,
+        luz,
         m2,
-        titular,
         mail,
+        medidor_luz,
+        nacionalidad,
+        numero_lote,
         telefono,
         telefono2,
+        titular,
+        ubicacion,
       },
       { where: { numero_lote: numero_lote } }
     );
 
-    return updatedBatch
+    return updatedBatch;
   } catch (error) {
     console.error(error);
   }
 };
 
-module.exports = { getAllBatches, postBatch, updateBatch };
+module.exports = { getAllBatches, postBatch, updateBatch, login };

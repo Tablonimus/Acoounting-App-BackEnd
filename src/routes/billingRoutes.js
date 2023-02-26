@@ -28,9 +28,9 @@ router.get("/", async (req, res) => {
 // });
 
 router.post("/newbill", async (req, res) => {
-  const { factura,servicio } = req.body;
+  const { service, batches } = req.body;
   try {
-    const newBill = await newInvoice( factura,servicio );
+    const newBill = await newInvoice(service, batches);
     res.status(201).json(newBill);
   } catch (error) {
     res.status(400).json(error.message);

@@ -10,29 +10,51 @@ module.exports = (sequelize) => {
       },
 
       numero_lote: {
-        type: DataTypes.STRING, //Lote y Manzana
+        type: DataTypes.STRING,
         unique: true,
         primaryKey: true,
       },
 
-      ubicacion: {
-        type: DataTypes.STRING, //Lote y Manzana
-        unique: true,
-      },
-
       m2: { type: DataTypes.STRING },
 
+      medidor_luz: { type: DataTypes.ARRAY(DataTypes.STRING) },
+
+      ubicacion: {
+        type: DataTypes.STRING,
+      },
+
       titular: {
+        type: DataTypes.STRING,
+      },
+
+      dni_titular: {
+        type: DataTypes.STRING,
+      },
+
+      nacionalidad: {
+        type: DataTypes.STRING,
+      },
+
+      domicilio_real: {
         type: DataTypes.STRING,
       },
 
       mail: { type: DataTypes.STRING },
 
       telefono: { type: DataTypes.STRING },
+
       telefono2: { type: DataTypes.STRING },
 
-      
+      luz: { type: DataTypes.BOOLEAN },
+
+      internet: { type: DataTypes.BOOLEAN },
+
+      gastos_comunes: { type: DataTypes.BOOLEAN },
+
+      is_admin: { type: DataTypes.BOOLEAN, defaultValue: false },
+
+      password: { type: DataTypes.STRING },
     },
-    { timestamps: false }
+    { timestamps: true }
   );
 };

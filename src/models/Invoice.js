@@ -4,12 +4,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Invoice",
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      
-      },
-
       numero_comprobante: {
         type: DataTypes.STRING,
         primaryKey: true,
