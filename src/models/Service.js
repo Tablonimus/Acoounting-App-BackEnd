@@ -11,7 +11,7 @@ module.exports = (sequelize) => {
       },
 
       nombre: {
-        type: DataTypes.STRING, //Lote y Manzana
+        type: DataTypes.STRING,
       },
 
       precio_fraccion: { type: DataTypes.STRING },

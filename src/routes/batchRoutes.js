@@ -16,7 +16,20 @@ router.post("/login", async (req, res, next) => {
   try {
     const token = await login(req.body.mail, req.body.password);
     const user = await Batch.findOne({ where: { mail: req.body.mail } });
-    const id = user.id;
+    const id = user.numero_lote;
+    res
+      .header("token", token)
+      .json({ error: null, data: { token }, id: { id } });
+  } catch (error) {
+    next(error);
+  }
+});
+router.get("/:id", async (req, res, next) => {
+
+  try {
+    const token = await login(req.body.mail, req.body.password);
+    const user = await Batch.findOne({ where: { mail: req.body.mail } });
+    const id = user.numero_lote;
     res
       .header("token", token)
       .json({ error: null, data: { token }, id: { id } });

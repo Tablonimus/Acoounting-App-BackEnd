@@ -72,7 +72,7 @@ const postBatch = async (
       telefono2,
       titular,
       ubicacion,
-      password: dni_titular
+      password: dni_titular,
     });
     return newBatch;
   } catch (error) {
@@ -122,4 +122,4 @@ const updateBatch = async (
   }
 };
 
-module.exports = { getAllBatches, postBatch, updateBatch, login };
+module.exports = { getAllBatches, postBatch, updateBatch, login, userId };

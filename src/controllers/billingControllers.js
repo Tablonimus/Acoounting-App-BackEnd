@@ -18,26 +18,28 @@ async function getAllInvoices() {
 
 const newInvoice = async (service, batches) => {
   try {
-    console.log(service, batches);
+    const invoiceService = await Service.findOne({
+      where: { nombre: service },
+    });
 
-    // const invoice = await Invoice.bulkCreate({
-    //   numero_comprobante,
-    //   remitente,
-    //   numero_lote,
-    //   direccion,
-    //   detalle,
-    //   consumo,
+    for (let i = 0; i < batches.length; i++) {
+      const batch = batches[i];
 
-    //   total,
-    //   fecha,
-    // });
+      let invoiceBatch = await Batch.findByPk(batch);
 
-    // if (servicio !== undefined) {
-    //   const dbBatch = await Batch.findAll({
-    //     where: { numero_lote: numero_lote },
-    //   });
-    //   newInvoice.addBatch(dbBatch);
-    // }
+      //facturacion a precio fijo
+      const invoice = await Invoice.create({
+        remitente: invoiceBatch.titular,
+        numero_lote: invoiceBatch.numero_lote,
+        direccion: invoiceBatch.ubicacion,
+        detalle: `Servicio de ${invoiceService.nombre}`,
+        consumo: invoiceService.precio_fijo,
+        total: invoiceService.precio_fijo,
+      });
+
+      console.log(invoice);
+    }
+
     return `Factura Creada Correctamente 👏👏👏`;
   } catch (error) {
     console.error(error);

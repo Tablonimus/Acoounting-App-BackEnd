@@ -4,12 +4,7 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Invoice",
     {
-      numero_comprobante: {
-        type: DataTypes.STRING,
-        primaryKey: true,
-        unique: true,
-      },
-
+   
       remitente: {
         type: DataTypes.STRING,
       },
@@ -32,16 +27,14 @@ module.exports = (sequelize) => {
 
       pagado: {
         type: DataTypes.BOOLEAN,
-        defaultValue: false
+        defaultValue: false,
       },
 
       total: {
         type: DataTypes.STRING,
       },
 
-      fecha: {
-        type: DataTypes.STRING,
-      },
+    
     }
     // { timestamps: false }
   );
