@@ -19,8 +19,11 @@
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 const server = require('./src/app.js');
 const { conn } = require('./src/db.js');
+const {createAll} = require("./src/controllers/batchControllers")
 
+const seeder = require("./seeder.json")
 // Syncing all the models at once.mcg
+//createAll()
 
 conn.sync({ force: false  }).then(() => { 
   server.listen(3001, () => {

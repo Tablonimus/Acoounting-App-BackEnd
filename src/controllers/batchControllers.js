@@ -2,7 +2,14 @@ const axios = require("axios");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
 const { Batch } = require("../db");
+const seeder = require("../../seeder.json");
 const TOKEN_KEY = "BVj543kpJ2POLN3PJPOl9nNNL84NL122A54";
+
+//BULKCREATE
+async function createAll() {
+  console.log("CREATING");
+  await Batch.bulkCreate(seeder).then(() => console.log("created"));
+}
 
 ////LOGIN JWT-------------------------//
 async function login(mail, password) {
@@ -122,4 +129,4 @@ const updateBatch = async (
   }
 };
 
-module.exports = { getAllBatches, postBatch, updateBatch, login, userId };
+module.exports = { getAllBatches, postBatch, updateBatch, login, userId,createAll };
