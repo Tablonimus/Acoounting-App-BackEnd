@@ -6,10 +6,10 @@ const {
   getAllBatches,
   postBatch,
   updateBatch,
-  login
+  login,
 } = require("../controllers/batchControllers");
 const verifyToken = require("../middlewares/validateToken");
-const { Batch } = require("../db");
+const { Batch,Invoice } = require("../db");
 
 router.post("/login", async (req, res, next) => {
   console.log(req.body.mail, req.body.password);
@@ -24,15 +24,21 @@ router.post("/login", async (req, res, next) => {
     next(error);
   }
 });
-router.get("/:id", async (req, res, next) => {
 
+router.get("/:id", async (req, res, next) => {
   try {
-    const token = await login(req.body.mail, req.body.password);
-    const user = await Batch.findOne({ where: { mail: req.body.mail } });
-    const id = user.numero_lote;
-    res
-      .header("token", token)
-      .json({ error: null, data: { token }, id: { id } });
+    const { id } = req.params;
+    const user = await Batch.findByPk(id,{
+      include: {
+        model: Invoice,
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
+    res.status(200).json(user)
+    
   } catch (error) {
     next(error);
   }
@@ -89,25 +95,37 @@ router.post("/", async (req, res) => {
 
 router.patch("/", async (req, res) => {
   const {
-    numero_lote,
-    ubicacion,
+    dni_titular,
+    domicilio_real,
+    gastos_comunes,
+    internet,
+    luz,
     m2,
-    titular,
-    medidor_luz,
     mail,
+    medidor_luz,
+    nacionalidad,
+    numero_lote,
     telefono,
     telefono2,
+    titular,
+    ubicacion,
   } = req.body;
   try {
     const updatedBatch = await updateBatch(
-      numero,
-      ubicacion,
+      dni_titular,
+      domicilio_real,
+      gastos_comunes,
+      internet,
+      luz,
       m2,
-      titular,
-      medidor_luz,
       mail,
+      medidor_luz,
+      nacionalidad,
+      numero_lote,
       telefono,
-      telefono2
+      telefono2,
+      titular,
+      ubicacion
     );
     res.status(201).json("Información de lote actualizada correctamente");
   } catch (error) {

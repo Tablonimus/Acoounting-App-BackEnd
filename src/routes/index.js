@@ -1,6 +1,7 @@
 const { Router } = require("express");
 
 const billing = require("./billingRoutes");
+const billingLight = require("./billingLightRoutes");
 const batch = require("./batchRoutes");
 const service = require("./serviceRoutes");
 const router = Router();
@@ -12,6 +13,7 @@ router.get("/", (req, res) => {
 });
 
 router.use("/billing", billing);
+router.use("/billingLight", billingLight);
 router.use("/batch", batch);
 router.use("/service", service);
 

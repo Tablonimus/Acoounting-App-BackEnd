@@ -1,7 +1,7 @@
 //                       _oo0oo_
 //                      o8888888o
 //                      88" . "88
-//                      (| -_- |)   
+//                      (| -_- |)
 //                      0\  =  /0
 //                    ___/`---'\___
 //                  .' \\|     |// '.
@@ -9,7 +9,7 @@
 //                / _||||| -:- |||||- \
 //               |   | \\\  -  /// |   |
 //               | \_|  ''\---/''  |_/ |
-//               \  .-\__  '-'  ___/-. /   
+//               \  .-\__  '-'  ___/-. /
 //             ___'. .'  /--.--\  `. .'___
 //          ."" '<  `.___\_<|>_/___.' >' "".
 //         | | :  `- \`.;`\ _ /`;.`/ - ` : | |
@@ -17,17 +17,16 @@
 //     =====`-.____`.___ \_____/___.-`___.-'=====
 //                NAMASTÉ`=---='NAMASTÉ
 //     ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-const server = require('./src/app.js');
-const { conn } = require('./src/db.js');
-const {createAll} = require("./src/controllers/batchControllers")
+const server = require("./src/app.js");
+const { conn } = require("./src/db.js");
+const { createAll } = require("./src/controllers/batchControllers");
 
-const seeder = require("./seeder.json")
+const seeder = require("./seeder.json");
 // Syncing all the models at once.mcg
 //createAll()
 
-conn.sync({ force: false  }).then(() => { 
+conn.sync({ force: false }).then(() => {
   server.listen(3001, () => {
-    console.log('%s listening at 3001'); // eslint-disable-line no-console
+    console.log("%s listening at 3001"); // eslint-disable-line no-console
   });
 });
- 

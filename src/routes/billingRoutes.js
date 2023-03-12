@@ -18,15 +18,6 @@ router.get("/", async (req, res) => {
   }
 });
 
-// router.get("/data", async (req, res) => {
-//   try {
-//     const invoices = await getAllInvoices();
-//     res.status(201).json(invoices);
-//   } catch (error) {
-//     res.status(400).json(error.message);
-//   }
-// });
-
 router.post("/newbill", async (req, res) => {
   const { service, batches } = req.body;
   try {

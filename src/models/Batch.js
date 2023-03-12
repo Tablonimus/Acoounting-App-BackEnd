@@ -4,10 +4,10 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Batch",
     {
-      id: {
-        type: DataTypes.UUID,
-        defaultValue: DataTypes.UUIDV4,
-      },
+      // id: {
+      //   type: DataTypes.UUID,
+      //   defaultValue: DataTypes.UUIDV4,
+      // },
 
       numero_lote: {
         type: DataTypes.STRING,

@@ -37,6 +37,8 @@ const newInvoice = async (service, batches) => {
         total: invoiceService.precio_fijo,
       });
 
+      await invoiceBatch.addInvoice(invoice);
+
       console.log(invoice);
     }
 

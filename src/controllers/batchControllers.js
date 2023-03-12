@@ -1,7 +1,8 @@
 const axios = require("axios");
 require("dotenv").config();
 const jwt = require("jsonwebtoken");
-const { Batch } = require("../db");
+const { Batch, Invoice } = require("../db");
+
 const seeder = require("../../seeder.json");
 const TOKEN_KEY = "BVj543kpJ2POLN3PJPOl9nNNL84NL122A54";
 
@@ -24,24 +25,27 @@ async function login(mail, password) {
   return token;
 }
 
-const userId = async (id) => {
-  try {
-    const user = await Batch.findOne({ where: { id: id, deleted: false } });
-
-    return user;
-  } catch (error) {
-    console.error(error);
-  }
-};
-
 async function getAllBatches() {
   try {
-    const dbBatches = await Batch.findAll();
+    const dbBatches = await Batch.findAll({
+      include: {
+        model: Invoice,
+        through: {
+          attributes: [],
+        },
+      },
+    });
+
     const jsonBatches = await Promise.all(
       dbBatches.map(async (batch) => batch.toJSON())
     );
 
-    return jsonBatches;
+    const sorted = await jsonBatches.sort(function (a, b) {
+      if (a.numero_lote < b.numero_lote) {
+        return -1;
+      }
+    });
+    return sorted;
   } catch (error) {
     throw new Error("getAllBatches controller error");
   }
@@ -129,4 +133,10 @@ const updateBatch = async (
   }
 };
 
-module.exports = { getAllBatches, postBatch, updateBatch, login, userId,createAll };
+module.exports = {
+  getAllBatches,
+  postBatch,
+  updateBatch,
+  login,
+  createAll,
+};
