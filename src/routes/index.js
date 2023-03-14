@@ -4,6 +4,7 @@ const billing = require("./billingRoutes");
 const billingLight = require("./billingLightRoutes");
 const batch = require("./batchRoutes");
 const service = require("./serviceRoutes");
+const admin = require("./adminRoutes")
 const router = Router();
 
 // Configurar los routers
@@ -16,5 +17,6 @@ router.use("/billing", billing);
 router.use("/billingLight", billingLight);
 router.use("/batch", batch);
 router.use("/service", service);
+router.use("/admin", admin);//      post: /login  post: /
 
 module.exports = router;
