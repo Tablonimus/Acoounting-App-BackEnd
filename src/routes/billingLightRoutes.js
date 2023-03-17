@@ -9,9 +9,9 @@ const {
 } = require("../controllers/billingLightControllers.js");
 
 router.post("/newbill", async (req, res) => {
-  const { service, batches, lightMeter } = req.body;
+  const {service,lightMeter,calc} = req.body;
   try {
-    const newBill = await newLightInvoice(service, batches, lightMeter);
+    const newBill = await newLightInvoice(service,lightMeter,calc);
     res.status(201).json(newBill);
   } catch (error) {
     res.status(400).json(error.message);

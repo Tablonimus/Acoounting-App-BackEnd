@@ -16,12 +16,14 @@ async function getAllInvoices() {
   }
 }
 
-const newLightInvoice = async (service, batches, lightMeter) => {
+const newLightInvoice = async (service,lightMeter,calc) => {
   try {
     const invoiceService = await Service.findOne({
-      where: { nombre: service },
+      where: { nombre: service  },
     });
-    console.log(lightMeter)
+    console.log(service)
+    console.log(Object.keys(lightMeter))
+    console.log(Object.keys(calc))
     // for (let i = 0; i < batches.length; i++) {
     //   const batch = batches[i];
     //   let invoiceBatch = await Batch.findByPk(batch);
