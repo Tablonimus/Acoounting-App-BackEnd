@@ -29,23 +29,25 @@ const postService = async (nombre, precio_fraccion, precio_fijo, proveedor) => {
     console.error(error);
   }
 };
-const updateService = async (
-  nombre,
-  precio_fraccion,
-  precio_fijo,
-  proveedor
-) => {
+const updateService = async (payload) => {
   try {
-    const updatedService = await Service.update(
-      {
-        nombre,
-        precio_fraccion,
-        precio_fijo,
-        proveedor,
-      },
-      { where: { nombre: nombre } }
-    );
-    return updatedService;
+    const serviciosEditados = Object.keys(payload);
+
+    for (let i = 0; i < serviciosEditados.length; i++) {
+      let element = serviciosEditados[i]; //string : "Luz" .. . .. .
+
+      let precio_fijo = payload[element].precio_fijo;
+      let precio_fraccion = payload[element].precio_fraccion;
+
+      const updatedService = await Service.update(
+        {
+          precio_fraccion,
+          precio_fijo,
+        },
+        { where: { nombre: element } }
+      );
+    }
+    return "Servicio actualizado correctamente";
   } catch (error) {
     console.error(error);
   }

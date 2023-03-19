@@ -16,15 +16,13 @@ async function createAll() {
 async function login(mail, password) {
   console.log(mail, password);
 
-
   const user = await Batch.findOne({ where: { mail: mail } });
   if (!user) throw new Error("Usuario no encontrado");
   if (user.deleted === true) throw new Error("Usuario baneado");
   const pass = await Batch.findOne({ where: { password: password } });
   if (!pass) throw new Error("Contraseña incorrecta");
   if (user.deleted === true) throw new Error("Usuario baneado");
-  
-  
+
   const token = jwt.sign({ id: user.id }, TOKEN_KEY);
   return token;
 }
@@ -110,6 +108,7 @@ const updateBatch = async (
   titular,
   ubicacion
 ) => {
+
   try {
     const updatedBatch = await Batch.update(
       {
@@ -126,7 +125,7 @@ const updateBatch = async (
         telefono,
         telefono2,
         titular,
-        ubicacion,
+        ubicacion
       },
       { where: { numero_lote: numero_lote } }
     );

@@ -33,15 +33,13 @@ router.post("/", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  const { nombre, precio_fraccion, precio_fijo, proveedor } = req.body;
+  const payload = req.body;
   try {
     const updatedService = await updateService(
-      nombre,
-      precio_fraccion,
-      precio_fijo,
-      proveedor
+ payload
     );
     res.status(201).json("Servicio actualizado correctamente");
+
   } catch (error) {
     res.status(400).json(error.message);
   }

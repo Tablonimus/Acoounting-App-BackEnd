@@ -7,10 +7,10 @@ const verifyToken = require("../middlewares/validateToken");
 const { Admin } = require("../db");
 
 router.post("/login", async (req, res, next) => {
-  console.log(req.body.mail, req.body.password);
+  console.log(req.body.user, req.body.password);
   try {
-    const token = await loginAdmin(req.body.mail, req.body.password);
-    const user = await Admin.findOne({ where: { mail: req.body.mail } });
+    const token = await loginAdmin(req.body.user, req.body.password);
+    const user = await Admin.findOne({ where: { user: req.body.user } });
     const id = user.id;
     res
       .header("token", token)
@@ -21,9 +21,9 @@ router.post("/login", async (req, res, next) => {
 });
 
 router.post("/", async (req, res) => {
-  const { mail, password } = req.body;
+  const { user, password } = req.body;
   try {
-    const newAdmin = await postAdmin(mail, password);
+    const newAdmin = await postAdmin(user, password);
     res.status(201).json(newAdmin);
   } catch (error) {
     res.status(400).json(error.message);
@@ -47,7 +47,7 @@ router.get("/:id", async (req, res) => {
 //     internet,
 //     luz,
 //     m2,
-//     mail,
+//     user,
 //     medidor_luz,
 //     nacionalidad,
 //     numero_lote,
@@ -64,7 +64,7 @@ router.get("/:id", async (req, res) => {
 //       internet,
 //       luz,
 //       m2,
-//       mail,
+//       user,
 //       medidor_luz,
 //       nacionalidad,
 //       numero_lote,
