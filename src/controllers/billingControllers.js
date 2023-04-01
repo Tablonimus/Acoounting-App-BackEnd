@@ -71,12 +71,14 @@ const updateInvoice = async (payload) => {
       if (!interesesNuevos) {
         total = total - a_cuentaNuevos;
         aCuentaAnteriores.push(a_cuentaNuevos);
-    
-        let a_cuenta = aCuentaAnteriores
+
+        let a_cuenta = aCuentaAnteriores;
+        let pagado = total <= 0 ? true : false;
 
         const updatedInvocie = await Invoice.update(
           {
             a_cuenta,
+            pagado,
             total,
           },
           { where: { id: element } }
@@ -87,11 +89,13 @@ const updateInvoice = async (payload) => {
         aCuentaAnteriores.push(a_cuentaNuevos);
         interesesAnteriores.push(interesesNuevos);
 
+        let a_cuenta = aCuentaAnteriores;
+        let intereses = interesesAnteriores;
+        let pagado = total <= 0 ? true : false;
 
-        let a_cuenta = aCuentaAnteriores
-        let intereses = interesesAnteriores
         const updatedInvocie = await Invoice.update(
           {
+            pagado,
             intereses,
             a_cuenta,
             total,
