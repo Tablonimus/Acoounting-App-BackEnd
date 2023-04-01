@@ -52,6 +52,7 @@ module.exports = (sequelize) => {
       gastos_comunes: { type: DataTypes.BOOLEAN },
 
       is_admin: { type: DataTypes.BOOLEAN, defaultValue: false },
+      deleted: { type: DataTypes.BOOLEAN, defaultValue: false },
 
       password: { type: DataTypes.STRING },
     },

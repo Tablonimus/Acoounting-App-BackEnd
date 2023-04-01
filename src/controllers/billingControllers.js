@@ -18,6 +18,7 @@ async function getAllInvoices() {
 
 const newInvoice = async (service, batches) => {
   try {
+    console.log("SERERERERERERERE", service);
     const invoiceService = await Service.findOne({
       where: { nombre: service },
     });
@@ -34,6 +35,9 @@ const newInvoice = async (service, batches) => {
         direccion: invoiceBatch.ubicacion,
         detalle: `Servicio de ${invoiceService.nombre}`,
         consumo: invoiceService.precio_fijo,
+        intereses: [0],
+        a_cuenta: [0],
+        importe_facturado: invoiceService.precio_fijo,
         total: invoiceService.precio_fijo,
       });
 
@@ -48,4 +52,58 @@ const newInvoice = async (service, batches) => {
   }
 };
 
-module.exports = { getAllInvoices, newInvoice };
+const updateInvoice = async (payload) => {
+  try {
+    const facturasEditadas = Object.keys(payload);
+
+    for (let i = 0; i < facturasEditadas.length; i++) {
+      let element = facturasEditadas[i]; //string : "5,1,5,3" .. . .. .
+      let facturaAeditar = await Invoice.findByPk(element);
+
+      let interesesNuevos = payload[element].intereses / 100; // 8/100 =
+      let a_cuentaNuevos = payload[element].a_cuenta || 0; //5464
+
+      let total = facturaAeditar.total; //125695   //
+
+      let aCuentaAnteriores = facturaAeditar.a_cuenta;
+      let interesesAnteriores = facturaAeditar.intereses;
+
+      if (!interesesNuevos) {
+        total = total - a_cuentaNuevos;
+        aCuentaAnteriores.push(a_cuentaNuevos);
+    
+        let a_cuenta = aCuentaAnteriores
+
+        const updatedInvocie = await Invoice.update(
+          {
+            a_cuenta,
+            total,
+          },
+          { where: { id: element } }
+        );
+      } else if (interesesNuevos) {
+        let totalParcial = total - a_cuentaNuevos;
+        total = totalParcial + totalParcial * interesesNuevos;
+        aCuentaAnteriores.push(a_cuentaNuevos);
+        interesesAnteriores.push(interesesNuevos);
+
+
+        let a_cuenta = aCuentaAnteriores
+        let intereses = interesesAnteriores
+        const updatedInvocie = await Invoice.update(
+          {
+            intereses,
+            a_cuenta,
+            total,
+          },
+          { where: { id: element } }
+        );
+      }
+    }
+    return "Servicio actualizado correctamente";
+  } catch (error) {
+    console.error(error);
+  }
+};
+
+module.exports = { getAllInvoices, newInvoice, updateInvoice };

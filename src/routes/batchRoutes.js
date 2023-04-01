@@ -12,10 +12,10 @@ const verifyToken = require("../middlewares/validateToken");
 const { Batch,Invoice } = require("../db");
 
 router.post("/login", async (req, res, next) => {
-  console.log(req.body.mail, req.body.password);
+  console.log(req.body.numero_lote, req.body.password);
   try {
-    const token = await login(req.body.mail, req.body.password);
-    const user = await Batch.findOne({ where: { mail: req.body.mail } });
+    const token = await login(req.body.numero_lote, req.body.password);
+    const user = await Batch.findOne({ where: { numero_lote: req.body.numero_lote } });
     const id = user.numero_lote;
     res
       .header("token", token)

@@ -3,20 +3,6 @@ require("dotenv").config();
 
 const { Invoice, Batch, Service } = require("../db");
 
-
-async function getAllInvoices() {
-  try {
-    const dbInvoices = await Invoice.findAll();
-    const jsonData = await Promise.all(
-      dbInvoices.map(async (inv) => inv.toJSON())
-    );
-
-    return jsonData;
-  } catch (error) {
-    throw new Error("getAllInvoices controller error");
-  }
-}
-
 const newLightInvoice = async (service, lightMeter, calc) => {
   try {
     const invoiceService = await Service.findOne({
@@ -30,7 +16,7 @@ const newLightInvoice = async (service, lightMeter, calc) => {
       const batch = lotesAFacturar[i];
       let invoiceBatch = await Batch.findByPk(batch);
 
-      let medicionAcutal = lightMeter[batch].medidor;
+      let medicionAcutal = new Date() + "//" + lightMeter[batch].medidor;
 
       let consumoDelMes = calc[batch];
 
@@ -42,7 +28,6 @@ const newLightInvoice = async (service, lightMeter, calc) => {
       let medidor_viejo = invoiceBatch.medidor_luz;
       medidor_viejo.push(medicionAcutal);
 
-   
       const updatedBatch = await Batch.update(
         {
           medidor_luz: medidor_viejo,
@@ -55,8 +40,11 @@ const newLightInvoice = async (service, lightMeter, calc) => {
         remitente: invoiceBatch.titular,
         numero_lote: invoiceBatch.numero_lote,
         direccion: invoiceBatch.ubicacion,
-        detalle: `Servicio de ${invoiceService.nombre}, Consumo ${consumoDelMes} Kw a $${invoiceService.precio_fraccion} por Kw y + $${invoiceService.precio_fijo} de gastos de luz fijos.`,
+        detalle: `Servicio de ${invoiceService.nombre}, Consumo ${consumoDelMes}Kw x $${invoiceService.precio_fraccion} el kw; "$${consumoFraccion}" + $${invoiceService.precio_fijo} de gastos de luz fijos.`,
         consumo: consumoFraccion,
+        intereses: [0],
+        a_cuenta: [0],
+        importe_facturado: totalAFacturar,
         total: totalAFacturar,
       });
       await invoiceBatch.addInvoice(invoice);
@@ -69,4 +57,4 @@ const newLightInvoice = async (service, lightMeter, calc) => {
   }
 };
 
-module.exports = { getAllInvoices, newLightInvoice };
+module.exports = { newLightInvoice };

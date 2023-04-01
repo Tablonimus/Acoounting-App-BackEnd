@@ -38,11 +38,13 @@ const updateService = async (payload) => {
 
       let precio_fijo = payload[element].precio_fijo;
       let precio_fraccion = payload[element].precio_fraccion;
+      let proveedor = payload[element].proveedor
 
       const updatedService = await Service.update(
         {
           precio_fraccion,
           precio_fijo,
+          proveedor,
         },
         { where: { nombre: element } }
       );

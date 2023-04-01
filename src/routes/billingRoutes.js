@@ -4,8 +4,7 @@ const axios = require("axios");
 const router = Router();
 const {
   getAllInvoices,
-  postBatch,
-  updateBatch,
+  updateInvoice,
   newInvoice,
 } = require("../controllers/billingControllers");
 
@@ -29,20 +28,13 @@ router.post("/newbill", async (req, res) => {
 });
 
 router.patch("/", async (req, res) => {
-  const { numero, ubicacion, m2, titular, mail, telefono, telefono2 } =
-    req.body;
+  const payload = req.body;
   try {
-    const updatedBatch = await updateBatch(
-      numero,
-      ubicacion,
-      m2,
-      titular,
-      mail,
-      telefono,
-      telefono2
-    );
-    res.status(201).json(updatedBatch);
+    console.log(payload);
+    const updatedInvoice = await updateInvoice(payload);
+    res.status(201).json("Servicio actualizado correctamente");
   } catch (error) {
+    console.log(error);
     res.status(400).json(error.message);
   }
 });

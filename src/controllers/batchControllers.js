@@ -13,15 +13,15 @@ async function createAll() {
 }
 
 ////LOGIN JWT-------------------------//
-async function login(mail, password) {
-  console.log(mail, password);
+async function login(lote, password) {
+  console.log(lote, password);
 
-  const user = await Batch.findOne({ where: { mail: mail } });
+  const user = await Batch.findOne({ where: { numero_lote: lote } });
   if (!user) throw new Error("Usuario no encontrado");
-  if (user.deleted === true) throw new Error("Usuario baneado");
+  if (user.deleted === true) throw new Error("Usuario No autorizado");
   const pass = await Batch.findOne({ where: { password: password } });
   if (!pass) throw new Error("Contraseña incorrecta");
-  if (user.deleted === true) throw new Error("Usuario baneado");
+  if (user.deleted === true) throw new Error("Usuario No autorizado");
 
   const token = jwt.sign({ id: user.id }, TOKEN_KEY);
   return token;
@@ -37,7 +37,7 @@ async function getAllBatches() {
         },
       },
     });
-
+   
     const jsonBatches = await Promise.all(
       dbBatches.map(async (batch) => batch.toJSON())
     );
@@ -108,7 +108,6 @@ const updateBatch = async (
   titular,
   ubicacion
 ) => {
-
   try {
     const updatedBatch = await Batch.update(
       {
@@ -125,7 +124,7 @@ const updateBatch = async (
         telefono,
         telefono2,
         titular,
-        ubicacion
+        ubicacion,
       },
       { where: { numero_lote: numero_lote } }
     );
@@ -137,9 +136,9 @@ const updateBatch = async (
 };
 
 module.exports = {
+  createAll,
+  login,
   getAllBatches,
   postBatch,
   updateBatch,
-  login,
-  createAll,
 };

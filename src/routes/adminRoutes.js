@@ -19,7 +19,6 @@ router.post("/login", async (req, res, next) => {
     next(error);
   }
 });
-
 router.post("/", async (req, res) => {
   const { user, password } = req.body;
   try {
@@ -39,44 +38,6 @@ router.get("/:id", async (req, res) => {
   }
 });
 
-// router.patch("/", async (req, res) => {
-//   const {
-//     dni_titular,
-//     domicilio_real,
-//     gastos_comunes,
-//     internet,
-//     luz,
-//     m2,
-//     user,
-//     medidor_luz,
-//     nacionalidad,
-//     numero_lote,
-//     telefono,
-//     telefono2,
-//     titular,
-//     ubicacion,
-//   } = req.body;
-//   try {
-//     const updatedBatch = await updateBatch(
-//       dni_titular,
-//       domicilio_real,
-//       gastos_comunes,
-//       internet,
-//       luz,
-//       m2,
-//       user,
-//       medidor_luz,
-//       nacionalidad,
-//       numero_lote,
-//       telefono,
-//       telefono2,
-//       titular,
-//       ubicacion
-//     );
-//     res.status(201).json("Información de lote actualizada correctamente");
-//   } catch (error) {
-//     res.status(400).json(error.message);
-//   }
-// });
+
 
 module.exports = router;

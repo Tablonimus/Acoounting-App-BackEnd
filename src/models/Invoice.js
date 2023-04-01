@@ -4,7 +4,6 @@ module.exports = (sequelize) => {
   sequelize.define(
     "Invoice",
     {
-   
       remitente: {
         type: DataTypes.STRING,
       },
@@ -30,11 +29,20 @@ module.exports = (sequelize) => {
         defaultValue: false,
       },
 
+      intereses: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
+      a_cuenta: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
+
       total: {
         type: DataTypes.STRING,
       },
 
-    
+      importe_facturado: {
+        type: DataTypes.STRING,
+      },
     }
     // { timestamps: false }
   );
