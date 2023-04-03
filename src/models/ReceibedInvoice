@@ -1,0 +1,32 @@
+const { DataTypes, UUIDV4 } = require("sequelize");
+
+module.exports = (sequelize) => {
+  sequelize.define(
+    "ReceivedInvoice",
+    {
+      detalle: {
+        type: DataTypes.STRING,
+      },
+      categoria: {
+        type: DataTypes.STRING,
+      },
+
+      pagado: {
+        type: DataTypes.BOOLEAN,
+        defaultValue: false,
+      },
+
+      a_cuenta: {
+        type: DataTypes.STRING,
+        defaultValue: "0",
+      },
+      comprobante: {
+        type: DataTypes.ARRAY(DataTypes.STRING),
+      },
+      total: {
+        type: DataTypes.STRING,
+      },
+    },
+    { timestamps: true }
+  );
+};

@@ -9,7 +9,6 @@ async function getAllInvoices() {
     const jsonData = await Promise.all(
       dbInvoices.map(async (inv) => inv.toJSON())
     );
-
     return jsonData;
   } catch (error) {
     throw new Error("getAllInvoices controller error");
